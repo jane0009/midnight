@@ -1,0 +1,25 @@
+{
+  "name": "midnight",
+  "version": "1.0.0",
+  "description": "Installer for moonlight! :)",
+  "main": "src/index.ts",
+  "scripts": {
+    "clean": "rm -rf build dist",
+    "build": "tsc --outDir build",
+    "start": "node build/index.js",
+    "package": "pkg win,linux,macos --out-path dist build/index.js",
+    "package-arm64": "pkg --target macos-arm64 --out-path dist build/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "LGPL-3.0-only",
+  "dependencies": {
+    "blessed": "^0.1.81"
+  },
+  "devDependencies": {
+    "@types/blessed": "^0.1.25",
+    "pkg": "^5.8.1",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
+  }
+}
