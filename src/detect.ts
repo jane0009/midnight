@@ -7,6 +7,7 @@ const user = userInfo();
 
 export type Install = {
   branch: "stable" | "ptb" | "canary";
+  platform: "win32" | "darwin" | "linux";
   resources_folder_path: string;
   readonly?: boolean;
   features?: string[];
@@ -25,6 +26,7 @@ export const getInstallList = (): Install[] => {
         if (dir) {
           installs.push({
             branch: "stable",
+            platform: "win32",
             resources_folder_path: `${user.homedir}\\AppData\\Local\\Discord\\${dir}\\resources`
           });
         }
@@ -37,6 +39,7 @@ export const getInstallList = (): Install[] => {
         if (dir) {
           installs.push({
             branch: "ptb",
+            platform: "win32",
             resources_folder_path: `${user.homedir}\\AppData\\Local\\DiscordPTB\\${dir}\\resources`
           });
         }
@@ -49,6 +52,7 @@ export const getInstallList = (): Install[] => {
         if (dir) {
           installs.push({
             branch: "canary",
+            platform: "win32",
             resources_folder_path: `${user.homedir}\\AppData\\Local\\DiscordCanary\\${dir}\\resources`
           });
         }
@@ -64,21 +68,25 @@ export const getInstallList = (): Install[] => {
       if (fs.existsSync("/Applications/Discord")) {
         installs.push({
           branch: "stable",
+          platform: "darwin",
           resources_folder_path: "/Applications/Discord/Contents/Resources"
         });
       } else if (fs.existsSync("/Applications/Discord.app")) {
         installs.push({
           branch: "stable",
+          platform: "darwin",
           resources_folder_path: "/Applications/Discord.app/Contents/Resources"
         });
       } else if (fs.existsSync(`${user.homedir}/Applications/Discord`)) {
         installs.push({
           branch: "stable",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord/Contents/Resources`
         });
       } else if (fs.existsSync(`${user.homedir}/Applications/Discord.app`)) {
         installs.push({
           branch: "stable",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord.app/Contents/Resources`
         });
       }
@@ -86,17 +94,20 @@ export const getInstallList = (): Install[] => {
       if (fs.existsSync("/Applications/Discord PTB")) {
         installs.push({
           branch: "ptb",
+          platform: "darwin",
           resources_folder_path: "/Applications/Discord PTB/Contents/Resources"
         });
       } else if (fs.existsSync("/Applications/Discord PTB.app")) {
         installs.push({
           branch: "ptb",
+          platform: "darwin",
           resources_folder_path:
             "/Applications/Discord PTB.app/Contents/Resources"
         });
       } else if (fs.existsSync(`${user.homedir}/Applications/Discord PTB`)) {
         installs.push({
           branch: "ptb",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord PTB/Contents/Resources`
         });
       } else if (
@@ -104,6 +115,7 @@ export const getInstallList = (): Install[] => {
       ) {
         installs.push({
           branch: "ptb",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord PTB.app/Contents/Resources`
         });
       }
@@ -111,18 +123,21 @@ export const getInstallList = (): Install[] => {
       if (fs.existsSync("/Applications/Discord Canary")) {
         installs.push({
           branch: "canary",
+          platform: "darwin",
           resources_folder_path:
             "/Applications/Discord Canary/Contents/Resources"
         });
       } else if (fs.existsSync("/Applications/Discord Canary.app")) {
         installs.push({
           branch: "canary",
+          platform: "darwin",
           resources_folder_path:
             "/Applications/Discord Canary.app/Contents/Resources"
         });
       } else if (fs.existsSync(`${user.homedir}/Applications/Discord Canary`)) {
         installs.push({
           branch: "canary",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord Canary/Contents/Resources`
         });
       } else if (
@@ -130,6 +145,7 @@ export const getInstallList = (): Install[] => {
       ) {
         installs.push({
           branch: "canary",
+          platform: "darwin",
           resources_folder_path: `${user.homedir}/Applications/Discord Canary.app/Contents/Resources`
         });
       }
@@ -171,14 +187,16 @@ const checkLinuxPath = (
   var install = undefined;
   for (const cmd of cmds) {
     // use child_process to check if the command exists using `which`
+    // TODO there is no guarantee this works, like, at all. find a better way
     exec(`bash -c "which ${cmd}"`, (err, stdout, stderr) => {
       if (err) return;
       if (stderr) return;
       if (stdout.startsWith("which: no")) return;
       install = {
         branch,
-        install_path: stdout.trim()
-      };
+        platform: "linux",
+        resources_folder_path: stdout.trim()
+      } as Install;
     });
     if (install !== undefined) break;
   }
