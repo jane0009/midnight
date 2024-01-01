@@ -14,6 +14,8 @@ With that out of the way,
 
 just head right on over to the [releases](https://github.com/jane0009/midnight/releases/) page, and download the executable that works for your system.
 
+FOR NOW, THIS DOES NOT WORK.
+
 ##### NOTES:
 
 on linux, you'll need ncurses-base and ncurses-term, or their equivalents for your distro.
@@ -26,7 +28,7 @@ clone or download the repository. install the packages with your preferred node 
 
 for example, on pnpm:
 `pnpm i`
-`pnpm start`
+`pnpm build; pnpm start`
 
 ### Development and contributing
 
