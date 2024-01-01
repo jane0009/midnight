@@ -7,8 +7,8 @@
     "clean": "rm -rf build dist",
     "build": "tsc --outDir build",
     "start": "node build/index.js",
-    "package": "pkg win,linux,macos --out-path dist build/index.js",
-    "package-arm64": "pkg --target macos-arm64 --out-path dist build/index.js"
+    "package": "pkg -t win,linux,macos --out-path dist build/index.js",
+    "package-arm64": "pkg -t macos-arm64 --out-path dist build/index.js"
   },
   "keywords": [],
   "author": "",
