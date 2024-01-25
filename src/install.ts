@@ -193,7 +193,7 @@ const nextStep = async (
       return;
     } else {
       const dest = fs.createWriteStream(discordFolder + "/app.asar");
-      await streamPipeline([res.body], dest);
+      await streamPipeline(res.body as unknown as NodeJS.ReadableStream, dest);
       appendText("OpenAsar file written.", background, tui);
     }
   }
